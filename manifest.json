@@ -1,0 +1,10 @@
+{
+  "domain": "sodexo",
+  "name": "Sodexo",
+  "version": "1.0.0",
+  "documentation": "https://github.com/netsoft-ruidias/ha-custom-component-sodexo",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@seu-usuario-github"],
+  "config_flow": true
+}

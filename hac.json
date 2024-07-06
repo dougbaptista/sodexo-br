@@ -1,0 +1,19 @@
+{
+  "name": "Sodexo Home Assistant Integration",
+  "content_in_root": false,
+  "domain": "sodexo",
+  "country": "BR",
+  "homeassistant": "2021.1.5",
+  "render_readme": true,
+  "zip_release": false,
+  "filename": "custom_components/sodexo",
+  "tags": [
+    "Integration",
+    "Sodexo",
+    "Brazil",
+    "Benefits"
+  ],
+  "authors": [
+    "@seu-usuario-github"
+  ]
+}
