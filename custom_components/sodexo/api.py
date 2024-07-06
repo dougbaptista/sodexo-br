@@ -1,19 +1,54 @@
 import requests
+from bs4 import BeautifulSoup
 
 class SodexoAPI:
     def __init__(self, username, password):
-        self.base_url = "https://connect.pluxee.app/op/interaction/"
+        self.username = username
+        self.password = password
         self.session = requests.Session()
+        self.base_url = "https://connect.pluxee.app/op/interaction/"
+        self.login_url = "https://b2c.sodexobeneficios.com.br/login/"
         self.token = None
-        self.login(username, password)
+        self.authenticate()
 
-    def login(self, username, password):
+    def get_initial_token(self):
+        response = self.session.get(self.login_url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        token_input = soup.find('input', {'name': 'token'})
+        if token_input:
+            return token_input['value']
+        raise ValueError("Não foi possível obter o token inicial.")
+
+    def authenticate(self):
         try:
-            login_url = self.base_url + "Gm-k-neDeJp0csiBIEsok"
-            response = self.session.post(login_url, data={"username": username, "password": password})
+            token = self.get_initial_token()
+            interaction_url = self.base_url + token
+            response = self.session.get(interaction_url)
             response.raise_for_status()
-            data = response.json()
-            self.token = data.get("access_token")
+
+            login_data = {
+                "username": self.username,
+                "continue": "Continue"  # Nome do botão continuar pode variar
+            }
+            login_response = self.session.post(interaction_url, data=login_data)
+            login_response.raise_for_status()
+
+            password_data = {
+                "password": self.password,
+                "continue": "Continue"
+            }
+            password_response = self.session.post(interaction_url, data=password_data)
+            password_response.raise_for_status()
+
+            # Verificar se o login foi bem-sucedido
+            if "error" in password_response.url:
+                raise ValueError("Erro de autenticação: verifique suas credenciais.")
+
+            # A partir daqui, você deve ter um token válido na sessão
+            self.token = self.session.cookies.get('token')
+            if not self.token:
+                raise ValueError("Token não encontrado após login.")
+        
         except requests.exceptions.RequestException as e:
             print(f"Erro ao fazer login: {e}")
             raise
@@ -32,5 +67,5 @@ class SodexoAPI:
             print(f"Erro ao obter saldo: {e}")
             raise
         except ValueError as e:
-            print(f"Erro ao processar resposta: {e}")
+            print(f"Erro ao processar resposta do saldo: {e}")
             raise
