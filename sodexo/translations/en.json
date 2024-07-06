@@ -1,29 +1,33 @@
 {
-    "title": "Sodexo meal card integration",
     "config": {
-        "step": {
-            "user": {
-                "title": "Add Credentials",
-                "description": "Please type your credentials",
-                "data": {
-                    "country": "Country",
-                    "username": "VAT Num.",
-                    "password": "Password"
-                },
-                "data_description": {
-                    "country": "Select the Country your card was issued",
-                    "username": "The VAT number used to login in https://minhaconta.sodexobeneficios.pt/ portal",
-                    "password": "The password used to login in https://minhaconta.sodexobeneficios.pt/ portal"
-                }
-            }
-        },
-        "error": {
-            "auth": "Invalid credentials accessing https://minhaconta.sodexobeneficios.pt/ portal.",
-            "invalidCountry": "Invalid country or country not supported yet."
-        },
-        "abort": {
-            "single_instance_allowed": "Only a single configuration of Sodexo is allowed.",
-            "already_configured": "Integration is already configured"
+      "step": {
+        "user": {
+          "title": "Configure Sodexo",
+          "description": "Please enter your Sodexo credentials.",
+          "data": {
+            "username": "Username",
+            "password": "Password"
+          }
         }
-    }
-}
+      },
+      "error": {
+        "auth": "Invalid username or password"
+      },
+      "abort": {
+        "single_instance_allowed": "Only a single instance is allowed"
+      }
+    },
+    "options": {
+      "step": {
+        "init": {
+          "title": "Sodexo Options",
+          "description": "Additional settings for Sodexo",
+          "data": {
+            "option1": "Option 1"
+          }
+        }
+      }
+    },
+    "title": "Sodexo"
+  }
+  
