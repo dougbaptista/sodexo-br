@@ -1,0 +1,10 @@
+{
+  "domain": "sodexo",
+  "name": "Sodexo",
+  "version": "1.0.0",
+  "documentation": "https://github.com/dougbaptista/sodexo-br",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@dougbaptista"],
+  "config_flow": true
+}
